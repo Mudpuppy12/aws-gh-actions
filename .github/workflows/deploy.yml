@@ -37,14 +37,12 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform init
-        working-directory: terraform
         run: |
           terraform init -reconfigure \
             -backend-config="aws_region=$AWS_REGION" \
       # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
       - name: Terraform plan
         id: tf-plan
-        working-directory: terraform
         run: |
           export exitcode=0
 
@@ -62,6 +60,5 @@ jobs:
       # Apply the pending changes
       - name: Terraform apply
         if: ${{ steps.tf-plan.outputs.exitcode == 2 }}
-        working-directory: terraform
         run: |
           terraform apply -auto-approve tfplan -no-color
