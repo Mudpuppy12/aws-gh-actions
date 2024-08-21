@@ -42,9 +42,7 @@ jobs:
       # An exit code of 0 indicated no changes, 1 a terraform failure, 2 there are pending changes.
       - name: Terraform plan
         id: tf-plan
-        run: terraform plan -no-color
+        run: terraform plan -no-color -out tfplan 
       # Apply the pending changes
       - name: Terraform apply
-        if: ${{ steps.tf-plan.outputs.exitcode == 2 }}
-        run: |
-          terraform apply -auto-approve tfplan -no-color
+        run:  terraform apply -auto-approve tfplan -no-color
