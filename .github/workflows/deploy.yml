@@ -24,7 +24,8 @@ jobs:
   Terraform-Plan-Apply:
     runs-on: ubuntu-latest
     steps:
-      - uses: hashicorp/setup-terraform@v3
+      - name: Fetch Terraform
+        uses: hashicorp/setup-terraform@v3
 
       - name: Git clone the repository
         uses: actions/checkout@v4
@@ -34,7 +35,7 @@ jobs:
           role-to-assume: ${{ env.ROLE_TO_ASSUME }}
           role-session-name: ${{ env.ROLE_SESSION_NAME }}
           aws-region: ${{ env.AWS_REGION }}
-          
+
       - name: Terraform init
         working-directory: terraform
         run: |
